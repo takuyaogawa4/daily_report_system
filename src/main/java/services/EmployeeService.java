@@ -32,15 +32,14 @@ public class EmployeeService extends ServiceBase {
 
     }
 
-    public EmployeeView findOne(int id) {
-
+    public EmployeeView findOne(String code, String plainPass, String pepper) {
         Employee e = null;
         try {
 
             String pass = EncryptUtil.getPasswordEncrypt(plainPass, pepper);
 
             e = em.createNamedQuery(JpaConst.Q_EMP_GET_BY_CODE_AND_PASS, Employee.class)
-                    .setParameter(JpaConst.JPQL_PARM_CODE, pass)
+                    .setParameter(JpaConst.JPQL_PARM_CODE, code)
                     .setParameter(JpaConst.JPQL_PARM_PASSWORD, pass)
                     .getSingleResult();
         } catch (NoResultException ex) {
@@ -48,7 +47,8 @@ public class EmployeeService extends ServiceBase {
         return EmployeeConverter.toView(e);
     }
 
-    public EmployeeView fineOne(int id) {
+    public EmployeeView findOne(int id) {
+
         Employee e = findOneInternal(id);
         return EmployeeConverter.toView(e);
     }
@@ -61,6 +61,23 @@ public class EmployeeService extends ServiceBase {
                 .getSingleResult();
         return employees_count;
 
+    }
+
+    public List<String> create(EmployeeView ev, String pepper) {
+
+        String pass = EncryptUtil.getPasswordEncrypt(ev.getPassword(), pepper);
+        ev.setPassword(pass);
+        LocalDateTime now = LocalDateTime.now();
+        ev.setCreatedAt(now);
+        ev.setUpdatedAt(now);
+
+        List<String> errors = EmployeeValidator.validate(this, ev, true, true);
+
+        if (errors.size() == 0) {
+            create(ev);
+
+        }
+        return errors;
     }
 
     public List<String> update(EmployeeView ev, String pepper) {
@@ -97,49 +114,6 @@ public class EmployeeService extends ServiceBase {
         return errors;
     }
 
-    public List<String> create(EmployeeView ev, EmployeeView pepper) {
-
-        String pass = EncryptUtil.getPasswordEncrypt(ev.getPassword(), pepper);
-        ev.setPassword(pass);
-
-        LocalDateTime nowDateTime = LocalDateTime.now();
-        ev.setCreatedAt(now);
-        ev.setUpdatedAt(now);
-
-        List<String> errors = EmployeeValidator.validate(this, ev, true, true);
-
-        if (errors.size() == 0) {
-            create(ev);
-        }
-
-        return errors;
-
-    }
-
-    boolean validatePass =false;if(ev.getPassword()!=null&&!ev.getPassword().equals(""))
-    {
-
-        validatePass = true;
-
-        savedEmp.setPassword(
-                EncryptUtil.getPasswordEncrypt(ev.getPassword(), pepper));
-
-    }
-
-    savedEmp.setName(ev.getName());savedEmp.setAdminFlag(ev.getAdminFlag());
-
-    LocalDateTime today = LocalDateTime.now();savedEmp.setUpdatedAt(today);
-
-    List<String> errors = EmployeeValidator.validate(this, savedEmp, validateCode, validatePass);
-
-    if(errors.size()==0)
-    {
-        Update(savedEmp);
-    }
-
-    return errors;
-
-    }
 
     public void destroy(Integer id) {
 
@@ -153,14 +127,14 @@ public class EmployeeService extends ServiceBase {
         update(savedEmp);
     }
 
-    public Boolean validateLogin(String code,String plainPass,String pepper) {
+    public Boolean validateLogin(String code, String plainPass, String pepper) {
 
         boolean isValidEmployee = false;
-        if(code != null && !code.equals("") && plainPass !=null && !plainPass.equals("")) {
+        if (code != null && !code.equals("") && plainPass != null && !plainPass.equals("")) {
 
             EmployeeView ev = findOne(code, plainPass, pepper);
 
-            if(ev != null && ev.getId() != null) {
+            if (ev != null && ev.getId() != null) {
 
                 isValidEmployee = true;
 
@@ -168,11 +142,11 @@ public class EmployeeService extends ServiceBase {
 
         }
 
-        return isValidEmployee isValidEmployee;
+        return isValidEmployee;
     }
 
     private Employee findOneInternal(int id) {
-        Employee e = em.find(Employee.class,id);
+        Employee e = em.find(Employee.class, id);
 
         return e;
     }
