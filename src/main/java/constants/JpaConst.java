@@ -43,13 +43,16 @@ public interface JpaConst {
     String JPQL_PARAM_EMPLOYEE = "employee";
 
     String Q_EMP_GET_ALL = ENTITY_EMP + ".getAll";
-    String Q_EMP_GET_ALL_DEF = "SELECT COUNT(e) FROM Employees AS e";
+    String Q_EMP_GET_ALL_DEF = "SELECT e FROM Employee AS e ORDER BY e.id DESC";
+
+    String Q_EMP_COUNT = ENTITY_EMP + ".count";
+    String Q_EMP_COUNT_DEF = "SELECT COUNT(e) FROM Employee AS e";
 
     String Q_EMP_GET_BY_CODE_AND_PASS = ENTITY_EMP + ".getByCodeAndPass";
-    String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "SELECT e FROM Employee AS e WHERE e.deleteFlag = 0 AND e.code =:" + JPQL_PARAM_PASSWORD;
+    String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "SELECT e FROM Employee AS e WHERE e.deleteFlag = 0 AND e.code =:" + JPQL_PARAM_CODE +" AND e.password = :" + JPQL_PARAM_PASSWORD;
 
-    String Q_EMP_GET_BY_COUNT_REGISTERED_BY_CODE = ENTITY_EMP + ".countRegisteredByCode";
-    String Q_EMP_GET_BY_COUNT_REGISTERED_BY_CODE_DEF = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = 0 AND e.code =:" + JPQL_PARAM_CODE;
+    String Q_EMP_COUNT_REGISTERED_BY_CODE = ENTITY_EMP + ".countRegisteredByCode";
+    String Q_EMP_COUNT_REGISTERED_BY_CODE_DEF = "SELECT COUNT(e) FROM Employee AS e WHERE e.code =:" + JPQL_PARAM_CODE;
 
 
     String Q_REP_GET_ALL = ENTITY_REP + "getAll";

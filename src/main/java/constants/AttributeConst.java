@@ -27,7 +27,7 @@ public enum AttributeConst {
 
 
     ROLE_ADMIN(1),
-    DEL_GENERAL(0),
+    ROLE_GENERAL(0),
 
     DEL_FLAG_TRUE(1),
     DEL_FLAG_FALSE(0),
