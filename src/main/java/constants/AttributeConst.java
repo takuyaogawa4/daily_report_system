@@ -9,7 +9,7 @@ public enum AttributeConst {
     MAX_ROW("maxRow"),
     PAGE("page"),
 
-    TOKEN("token"),
+    TOKEN("_token"),
     ERR("errors"),
 
     LOGIN_EMP("login_employee"),

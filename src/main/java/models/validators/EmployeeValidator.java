@@ -52,8 +52,8 @@ public class EmployeeValidator {
     }
 
     private static long isDuplicateEmployee(EmployeeService service, String code) {
-        long employeeCount = service.countByCode(code);
-        return employeeCount;
+        long employeesCount = service.countByCode(code);
+        return employeesCount;
 
     }
 

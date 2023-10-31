@@ -73,9 +73,9 @@ public abstract class ActionBase {
 
     protected boolean checkToken() throws ServletException, IOException {
 
-        String _tokenString = getRequestParam(AttributeConst.TOKEN);
+        String _token = getRequestParam(AttributeConst.TOKEN);
 
-        if (_tokenString == null || !(_tokenString.equals(getTokenId()))) {
+        if (_token == null || !(_token.equals(getTokenId()))) {
             forward(ForwardConst.FW_ERR_UNKNOWN);
 
             return false;
