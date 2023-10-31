@@ -38,9 +38,9 @@ public interface JpaConst {
     String ENTITY_EMP = "employee";
     String ENTITY_REP = "report";
 
-    String JPQL_PARAM_CODE = "code";
-    String JPQL_PARAM_PASSWORD = "password";
-    String JPQL_PARAM_EMPLOYEE = "employee";
+    String JPQL_PARM_CODE = "code";
+    String JPQL_PARM_PASSWORD = "password";
+    String JPQL_PARM_EMPLOYEE = "employee";
 
     String Q_EMP_GET_ALL = ENTITY_EMP + ".getAll";
     String Q_EMP_GET_ALL_DEF = "SELECT e FROM Employee AS e ORDER BY e.id DESC";
@@ -49,10 +49,10 @@ public interface JpaConst {
     String Q_EMP_COUNT_DEF = "SELECT COUNT(e) FROM Employee AS e";
 
     String Q_EMP_GET_BY_CODE_AND_PASS = ENTITY_EMP + ".getByCodeAndPass";
-    String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "SELECT e FROM Employee AS e WHERE e.deleteFlag = 0 AND e.code =:" + JPQL_PARAM_CODE +" AND e.password = :" + JPQL_PARAM_PASSWORD;
+    String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "SELECT e FROM Employee AS e WHERE e.deleteFlag = 0 AND e.code =:" + JPQL_PARM_CODE +" AND e.password = :" + JPQL_PARM_PASSWORD;
 
     String Q_EMP_COUNT_REGISTERED_BY_CODE = ENTITY_EMP + ".countRegisteredByCode";
-    String Q_EMP_COUNT_REGISTERED_BY_CODE_DEF = "SELECT COUNT(e) FROM Employee AS e WHERE e.code =:" + JPQL_PARAM_CODE;
+    String Q_EMP_COUNT_REGISTERED_BY_CODE_DEF = "SELECT COUNT(e) FROM Employee AS e WHERE e.code =:" + JPQL_PARM_CODE;
 
 
     String Q_REP_GET_ALL = ENTITY_REP + "getAll";
@@ -62,10 +62,10 @@ public interface JpaConst {
     String Q_REP_COUNT_DEF = "SELECT COUNT(r) FROM Report AS r";
 
     String Q_REP_GET_ALL_MINE = ENTITY_REP + "getAllMine";
-    String Q_REP_GET_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHEREE r.employee = :" + JPQL_PARAM_EMPLOYEE + "ORDER BY r.id DESC";
+    String Q_REP_GET_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHEREE r.employee = :" + JPQL_PARM_EMPLOYEE + "ORDER BY r.id DESC";
 
     String Q_REP_COUNT_ALL_MINE = ENTITY_REP + "countAllMine";
-    String Q_REP_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHEREE r.employee = :" + JPQL_PARAM_EMPLOYEE;
+    String Q_REP_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHEREE r.employee = :" + JPQL_PARM_EMPLOYEE;
 
 
 
