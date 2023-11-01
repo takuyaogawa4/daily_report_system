@@ -17,7 +17,7 @@
 <h2>id : ${employee.id}の従業員情報 編集ページ</h2>
 <p>(パスワードは変更する場合のみ入力してください)</p>
 
-<form method="POST" action="<c:url value='action${action}&command=${commUpd}' />">
+<form method="POST" action="<c:url value='?action=${action}&command=${commUpd}' />">
 <c:import url="_form.jsp" />
 </form>
 
