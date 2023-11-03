@@ -61,14 +61,14 @@ public class ReportAction extends ActionBase {
         forward(ForwardConst.FW_REP_NEW);
     }
 
-    public void create() throws ServletException,IOException{
+    public void create() throws ServletException, IOException {
 
-        if(checkToken()) {
+        if (checkToken()) {
             LocalDate day = null;
-            if(getRequestParam(AttributeConst.REP_DATE) == null
+            if (getRequestParam(AttributeConst.REP_DATE) == null
                     || getRequestParam(AttributeConst.REP_DATE).equals("")) {
                 day = LocalDate.now();
-            }else {
+            } else {
                 day = LocalDate.parse(getRequestParam(AttributeConst.REP_DATE));
 
             }
@@ -84,7 +84,7 @@ public class ReportAction extends ActionBase {
                     null);
             List<String> errors = service.create(rv);
 
-            if(errors.size() > 0 ) {
+            if (errors.size() > 0) {
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId());
                 putRequestScope(AttributeConst.REPORT, rv);
@@ -92,13 +92,28 @@ public class ReportAction extends ActionBase {
 
                 forward(ForwardConst.FW_REP_NEW);
 
-            }else {
+            } else {
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
 
-                redirect(ForwardConst.ACT_REP,ForwardConst.CMD_INDEX);
+                redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
 
             }
 
+        }
+    }
+
+    public void show() throws ServletException, IOException {
+
+        ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+        if (rv == null) {
+
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+        } else {
+
+            putRequestScope(AttributeConst.REPORT, rv);
+
+            forward(ForwardConst.FW_REP_SHOW);
         }
     }
 
