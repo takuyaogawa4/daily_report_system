@@ -56,8 +56,8 @@
         </c:when>
                     <c:otherwise>
                         <a
-                            href="<c:url value='action=${actEmp}&command=${commIdx}&page=${i}' />"><c:out
-                                value="{i}" /> /> </a>&nbsp;
+                            href="<c:url value='?action=${actEmp}&command=${commIdx}&page=${i}' />"><c:out
+                                value="${i}" /> /> </a>&nbsp;
         </c:otherwise>
                 </c:choose>
             </c:forEach>
