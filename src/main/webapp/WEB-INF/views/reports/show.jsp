@@ -5,6 +5,7 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
+<c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
 
@@ -34,14 +35,20 @@
 </tr>
 </tbody>
 </table>
-<c:if test="${sessionScope.login_employee.id == report.employee.id}">
+<c:choose>
+<c:when test="${sessionScope.login_employee.id == report.employee.id}">
 <p>
 <a href="<c:url value='?action=${actRep}&command=${commEdt}&id=${report.id}' />">この日報を編集する</a>
 </p>
-</c:if>
-
 <p>
-<a href="<c:url value='?action=${actRep}&command=${commIdx}' />">一覧に戻る</a>
+<a href="<c:url value='?action=${actTop}&command=${commIdx}' />">一覧に戻る</a>
 </p>
+</c:when>
+<c:otherwise>
+<a href="<c:url value='?action=${actRep}&command=${commIdx}' />">一覧に戻る</a>
+</c:otherwise>
+</c:choose>
+
+
 </c:param>
 </c:import>

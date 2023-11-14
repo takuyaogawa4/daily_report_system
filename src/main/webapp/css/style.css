@@ -167,3 +167,8 @@ pre{
 h3{
     font-size:larger;
 }
+#form_follow{
+    display:inline;
+    background-color: #d4edda;
+
+}

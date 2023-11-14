@@ -29,4 +29,7 @@ public class EmployeeView {
 
     private Integer deleteFlag;
 
+    private Boolean followFlag;
+
+
 }

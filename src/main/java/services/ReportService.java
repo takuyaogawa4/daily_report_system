@@ -32,20 +32,22 @@ public class ReportService extends ServiceBase {
         return count;
     }
 
-    public List<ReportView> getAllPerPage(int page) {
+    public List<ReportView> getAllPerPage(int page,int login_id) {
 
         List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL, Report.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOW_LOGIN_ID, login_id)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
         return ReportConverter.toViewList(reports);
     }
 
-    public long countAll() {
-        long reports_count = (long) em.createNamedQuery(JpaConst.Q_REP_COUNT, Long.class)
-                .getSingleResult();
-        return reports_count;
-    }
+//    データベースから取得ではなく、取得したリストのサイズを表示とするため必要なし
+//    public long countAll() {
+//        long reports_count = (long) em.createNamedQuery(JpaConst.Q_REP_COUNT, Long.class)
+//                .getSingleResult();
+//        return reports_count;
+//    }
 
     public ReportView findOne(int id) {
         return ReportConverter.toView(findOneInternal(id));

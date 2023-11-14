@@ -31,10 +31,17 @@ public class EmployeeAction extends ActionBase {
         if (checkAdmin()) {
 
             int page = getPage();
+             EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+             int loginId = ev.getId();
 
-            List<EmployeeView> employees = service.getPerPage(page);
 
-            long employeeCount = service.countAll();
+            List<EmployeeView> employees = service.getPerPage(page,loginId);
+
+            //削除済みとログインユーザーを非表示にした場合の件数を取得
+            long employeeCount = 0;
+            if(employees != null) {
+                employeeCount = employees.size();
+            }
 
             putRequestScope(AttributeConst.EMPLOYEES, employees);
             putRequestScope(AttributeConst.EMP_COUNT, employeeCount);
@@ -74,7 +81,8 @@ public class EmployeeAction extends ActionBase {
                     toNumber(getRequestParam(AttributeConst.EMP_ADMIN_FLG)),
                     null,
                     null,
-                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue(),
+                    null);
             String pepper = getContextScope(PropertyConst.PEPPER);
 
             List<String> errors = service.create(ev, pepper);
@@ -143,7 +151,8 @@ public class EmployeeAction extends ActionBase {
                     toNumber(getRequestParam(AttributeConst.EMP_ADMIN_FLG)),
                     null,
                     null,
-                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue(),
+                    null);
 
             String pepper = getContextScope(PropertyConst.PEPPER);
 
@@ -191,5 +200,16 @@ public class EmployeeAction extends ActionBase {
 
         }
     }
+
+    public void follow() throws ServletException, IOException {
+
+
+            //service.follow(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_FOLLOWED.getMessage());
+
+            //  redirect(ForwardConst.ACT_EMP, ForwardConst.CMD_INDEX);
+        }
+
 
 }

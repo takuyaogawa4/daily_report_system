@@ -9,6 +9,8 @@ public enum ForwardConst {
     ACT_EMP("Employee"),
     ACT_REP("Report"),
     ACT_AUTH("Auth"),
+    //follow内容
+    ACT_FOLLOW("Follow"),
 
     CMD("command"),
     CMD_NONE(""),
@@ -22,6 +24,9 @@ public enum ForwardConst {
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
+    //follow
+    CMD_FOLLOW("follow"),
+    CMD_UNFOLLOW("unFollow"),
 
     FW_ERR_UNKNOWN("error/unknown"),
     FW_TOP_INDEX("topPage/index"),

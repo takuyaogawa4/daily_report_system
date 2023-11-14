@@ -9,28 +9,47 @@ import actions.views.EmployeeConverter;
 import actions.views.EmployeeView;
 import constants.JpaConst;
 import models.Employee;
+import models.Follow;
 import models.validators.EmployeeValidator;
 import utils.EncryptUtil;
 
 public class EmployeeService extends ServiceBase {
 
-    public List<EmployeeView> getPerPage(int page) {
+    public List<EmployeeView> getPerPage(int page, Integer login_id) {
 
         List<Employee> employees = em.createNamedQuery(JpaConst.Q_EMP_GET_ALL, Employee.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOW_LOGIN_ID, login_id)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
-        return EmployeeConverter.toViewList(employees);
+
+        List<Follow> follows = em.createNamedQuery(JpaConst.Q_FOLLOW_GET_BY_ID, Follow.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOW_LOGIN_ID, login_id)
+                .getResultList();
+
+        List<EmployeeView> employeeViews = EmployeeConverter.toViewList(employees);
+        for (Follow follow : follows) {
+
+            for (EmployeeView empv : employeeViews) {
+                if (empv.getId() == follow.getFollowed_id()) {
+                    empv.setFollowFlag(true);
+
+                }
+            }
+
+        }
+        return employeeViews;
     }
 
-    public long countAll() {
-
-        long empCount = (long) em.createNamedQuery(JpaConst.Q_EMP_COUNT, Long.class)
-                .getSingleResult();
-
-        return empCount;
-
-    }
+//    データベースから取得ではなく、取得したリストのサイズを表示とするため必要なし
+//    public long countAll() {
+//
+//        long empCount = (long) em.createNamedQuery(JpaConst.Q_EMP_COUNT, Long.class)
+//                .getSingleResult();
+//
+//        return empCount;
+//
+//    }
 
     public EmployeeView findOne(String code, String plainPass, String pepper) {
         Employee e = null;
@@ -114,7 +133,6 @@ public class EmployeeService extends ServiceBase {
         return errors;
     }
 
-
     public void destroy(Integer id) {
 
         EmployeeView savedEmp = findOne(id);
@@ -166,4 +184,6 @@ public class EmployeeService extends ServiceBase {
         EmployeeConverter.copyViewToModel(e, ev);
         em.getTransaction().commit();
     }
+
+
 }

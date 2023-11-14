@@ -1,3 +1,4 @@
+
 package constants;
 
 public enum AttributeConst {
@@ -24,6 +25,12 @@ public enum AttributeConst {
     EMP_PASS("password"),
     EMP_NAME("name"),
     EMP_ADMIN_FLG("admin_flag"),
+
+    FOLLOW("follow"),
+    FOLLOW_ID("follow_id"),
+    FOLLOW_NAME("follow_name"),
+    FOLLOW_FLAG("follow_flag"),
+
 
 
     ROLE_ADMIN(1),

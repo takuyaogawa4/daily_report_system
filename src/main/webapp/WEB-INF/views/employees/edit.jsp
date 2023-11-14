@@ -6,6 +6,7 @@
 
 
 <c:set var="action" value="${ForwardConst.ACT_EMP.getValue()}" />
+<c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commUpd" value="${ForwardConst.CMD_UPDATE.getValue()}" />
 <c:set var="commDel" value="${ForwardConst.CMD_DESTROY.getValue()}" />
@@ -38,7 +39,7 @@ function confirmDestroy(){
 }
 </script>
 <p>
-<a href="<c:url value='?action=${action}&command=${commIdx}' />">一覧に戻る</a>
+<a href="<c:url value='?action=${actTop}&command=${commIdx}' />">一覧に戻る</a>
 
 </p>
 </c:param>

@@ -26,9 +26,10 @@ import lombok.Setter;
         @NamedQuery(
                 name = JpaConst.Q_EMP_GET_ALL,
                 query = JpaConst.Q_EMP_GET_ALL_DEF),
-        @NamedQuery(
-                name =JpaConst.Q_EMP_COUNT,
-                query =JpaConst.Q_EMP_COUNT_DEF),
+//        データベースから取得ではなく、取得したリストのサイズを表示とするため必要なし
+//        @NamedQuery(
+//                name =JpaConst.Q_EMP_COUNT,
+//                query =JpaConst.Q_EMP_COUNT_DEF),
         @NamedQuery(
                 name =JpaConst.Q_EMP_COUNT_REGISTERED_BY_CODE,
                 query =JpaConst.Q_EMP_COUNT_REGISTERED_BY_CODE_DEF),

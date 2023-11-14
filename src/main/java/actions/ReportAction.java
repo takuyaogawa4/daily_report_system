@@ -31,10 +31,15 @@ public class ReportAction extends ActionBase {
     public void index() throws ServletException, IOException {
 
         int page = getPage();
+        EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+        int loginId = ev.getId();
+        List<ReportView> reports = service.getAllPerPage(page,loginId);
+        long reportsCount = 0;
+        if(reports != null) {
+            reportsCount = reports.size();
+        }
 
-        List<ReportView> reports = service.getAllPerPage(page);
 
-        long reportsCount = service.countAll();
 
         putRequestScope(AttributeConst.REPORTS, reports);
         putRequestScope(AttributeConst.REP_COUNT, reportsCount);
@@ -95,7 +100,7 @@ public class ReportAction extends ActionBase {
             } else {
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
 
-                redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+                redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
 
             }
 

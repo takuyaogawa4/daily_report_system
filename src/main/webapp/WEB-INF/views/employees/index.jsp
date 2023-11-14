@@ -4,10 +4,17 @@
 <%@ page import="constants.AttributeConst"%>
 <%@ page import="constants.ForwardConst"%>
 
+<c:set var="action" value="${ForwardConst.ACT_FOLLOW.getValue()}" />
 <c:set var="actEmp" value="${ForwardConst.ACT_EMP.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
+<c:set var="commFollow" value="${ForwardConst.CMD_FOLLOW.getValue()}" />
+
+<!-- フォローー解除 -->
+<c:set var="commUnfollow"
+    value="${ForwardConst.CMD_UNFOLLOW.getValue()}" />
+
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
@@ -38,10 +45,75 @@
                                 <c:otherwise>
                                     <a
                                         href="<c:url value='?action=${actEmp}&command=${commShow}&id=${employee.id}' />">詳細を見る</a>
+
+                                    <!--                                           フォロー機能追加 -->
+
+
+
+
+
+
+
+
+
+                                    <!-- フォローしていたらキャンセル表示 キャンセル内容を明記する-->
+                                    <c:choose>
+                                        <c:when test="${employee.followFlag == true}">
+
+
+
+                                            <form method="POST" style="display: inline"
+                                                action="<c:url value='?action=${action}&command=${commUnfollow}' />">
+                                                <input type="hidden"
+                                                    name="${AttributeConst.LOGIN_EMP.getValue()}"
+                                                    value="${login_employee.id}" /> <input
+                                                    name="${AttributeConst.FOLLOW_ID.getValue()}"
+                                                    type="hidden" value="${employee.id}" /> <input
+                                                    type="hidden" name="${AttributeConst.TOKEN.getValue()}"
+                                                    value="${_token}" />
+                                                <button type="submit">フォロー解除</button>
+
+                                            </form>
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <form method="POST" class="form_follow"
+                                                style="display: inline"
+                                                action="<c:url value='?action=${action}&command=${commFollow}' />">
+
+                                                <input type="hidden"
+                                                    name="${AttributeConst.LOGIN_EMP.getValue()}"
+                                                    value="${login_employee.id}" /> <input
+                                                    name="${AttributeConst.FOLLOW_ID.getValue()}"
+                                                    type="hidden" value="${employee.id}" /> <input
+                                                    type="hidden" name="${AttributeConst.TOKEN.getValue()}"
+                                                    value="${_token}" />
+
+
+                                                <button type="submit">フォロー</button>
+
+
+                                            </form>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <!--                                         フォロー機能終わり -->
+
                                 </c:otherwise>
                             </c:choose></td>
                     </tr>
                 </c:forEach>
+                <%--                 <c:if test="${flush != null}"> --%>
+                <!--                     <div id="flush_error"> -->
+                <%--                         <c:out value="${flush}"></c:out> --%>
+                <!--                     </div> -->
+                <%--                 </c:if> --%>
+                <%--                                                                 <c:if test="${flush != null}"> --%>
+                <!--                                                     <div id="flush_success"> -->
+                <%--                                                         <c:out value="${flush}"></c:out> --%>
+                <!--                                                     </div> -->
+                <%--                                                 </c:if> --%>
+
             </tbody>
         </table>
 
